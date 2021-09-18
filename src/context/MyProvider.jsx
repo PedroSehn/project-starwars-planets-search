@@ -15,6 +15,11 @@ export default function MyProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: '',
+    }],
   });
 
   useEffect(() => {
