@@ -5,24 +5,34 @@ import Context from './Context';
 
 export default function MyProvider({ children }) {
   const [planetsState, setPlanetState] = useState({
+    name: [],
     data: [],
+    planets: [],
     loading: true,
+  });
+
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
   });
 
   useEffect(() => {
     async function resultApi() {
       const response = await requestApi();
       setPlanetState((prevState) => ({
-        ...prevState.data,
+        ...prevState,
+        name: Object.keys(response.results[0]),
         data: response.results,
         loading: false,
       }));
     }
     resultApi();
   }, []);
+
   return (
     <main>
-      <Context.Provider value={ { planetsState, setPlanetState } }>
+      <Context.Provider value={ { planetsState, setPlanetState, filters, setFilters } }>
         {children}
       </Context.Provider>
     </main>

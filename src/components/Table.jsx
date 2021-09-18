@@ -1,11 +1,36 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context/Context';
 
 export default function Table() {
-  const { planetsState } = useContext(Context);
-  if (!planetsState.loading) {
-    const headerOfTable = Object.keys(planetsState.data[0]);
+  const { planetsState, filters, setFilters } = useContext(Context);
+  const [filterPlanets, setFilterPlanets] = useState([]);
+
+  function handleChange({ target }) {
+    setFilters((prevState) => ({ ...prevState,
+      filterByName: { name: target.value } }));
+  }
+
+  const { name } = filters.filterByName;
+  useEffect(() => {
+    setFilterPlanets(planetsState.data.filter((planet) => planet.name.includes(name)));
+  }, [name, planetsState.data]);
+
+  if (planetsState.loading) {
     return (
+      <h1>Loading</h1>
+    );
+  }
+  const headerOfTable = planetsState.name;
+
+  return (
+    <main>
+      <input
+        type="text"
+        data-testid="name-filter"
+        name="textFilter"
+        value={ name }
+        onChange={ handleChange }
+      />
       <table>
         <thead>
           <tr>
@@ -14,18 +39,15 @@ export default function Table() {
           </tr>
         </thead>
         <tfoot>
-          {planetsState.data.map((planet, index) => (
+          {filterPlanets.map((planet, index) => (
             <tr key={ index }>
               {headerOfTable
-                .map((value, index2) => index2 <= headerOfTable.length - 2
-              && <td key={ index2 }>{planet[value]}</td>)}
+                .map((typeColum, index2) => index2 <= headerOfTable.length - 2
+              && <td key={ index2 }>{planet[typeColum]}</td>)}
             </tr>
           ))}
         </tfoot>
       </table>
-    );
-  }
-  return (
-    <h1>Loading</h1>
+    </main>
   );
 }
