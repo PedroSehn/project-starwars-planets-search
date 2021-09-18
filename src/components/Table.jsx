@@ -2,9 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context/Context';
 import SelectFilter from './SelectFilter';
 
+const optionType = ['maior que', 'menor que', 'igual a'];
 const optionColum = ['population',
   'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-const optionType = ['maior que', 'menor que', 'igual a'];
+let remove = [];
 
 function int(num) {
   return parseInt(num, 10);
@@ -25,7 +26,13 @@ export default function Table() {
   }
 
   function handleClick() {
-    setFilters({ ...filters, filterByNumericValues: [filterValues] });
+    const arrayOfFilters = filters.filterByNumericValues;
+    setFilters({ ...filters,
+      filterByNumericValues: arrayOfFilters.length === 2
+        ? [...arrayOfFilters] : arrayOfFilters.concat(filterValues) });
+    if (remove.length === 0) {
+      remove = optionColum.splice(optionColum.indexOf(filterValues.column), 1);
+    }
   }
 
   function handleChangeFilterSelect({ target }) {
@@ -39,19 +46,21 @@ export default function Table() {
 
   useEffect(() => {
     const { filterByNumericValues } = filters;
-    const filterValue = filterByNumericValues[0];
-    setFilterPlanets(planetsState.data.filter((planet) => {
-      switch (filterValue.comparison) {
-      case 'maior que':
-        return int(planet[filterValue.column]) > int(filterValue.value);
-      case 'menor que':
-        return int(planet[filterValue.column]) < int(filterValue.value);
-      case 'igual a':
-        return int(planet[filterValue.column]) === int(filterValue.value);
-      default:
-        return planet;
-      }
-    }));
+    // const filterValue = filterByNumericValues[0];
+    filterByNumericValues.forEach((filter) => {
+      setFilterPlanets(planetsState.data.filter((planet) => {
+        switch (filter.comparison) {
+        case 'maior que':
+          return int(planet[filter.column]) > int(filter.value);
+        case 'menor que':
+          return int(planet[filter.column]) < int(filter.value);
+        case 'igual a':
+          return int(planet[filter.column]) === int(filter.value);
+        default:
+          return planet;
+        }
+      }));
+    });
   }, [filters, planetsState.data]);
 
   if (planetsState.loading) {
