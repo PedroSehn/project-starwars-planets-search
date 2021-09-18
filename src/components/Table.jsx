@@ -3,9 +3,9 @@ import Context from '../context/Context';
 import SelectFilter from './SelectFilter';
 
 const optionType = ['maior que', 'menor que', 'igual a'];
-const optionColum = ['population',
+
+const originalOptionColumn = ['population',
   'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-let remove = [];
 
 function int(num) {
   return parseInt(num, 10);
@@ -15,6 +15,8 @@ export default function Table() {
   const { planetsState, filters, setFilters } = useContext(Context);
   const [filterPlanets, setFilterPlanets] = useState([]);
   const [filterValues, setFilterValues] = useState({
+    optionColum: ['population',
+      'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
     column: 'population',
     comparison: 'maior que',
     value: '',
@@ -30,9 +32,9 @@ export default function Table() {
     setFilters({ ...filters,
       filterByNumericValues: arrayOfFilters.length === 2
         ? [...arrayOfFilters] : arrayOfFilters.concat(filterValues) });
-    if (remove.length === 0) {
-      remove = optionColum.splice(optionColum.indexOf(filterValues.column), 1);
-    }
+    setFilterValues({ ...filterValues,
+      optionColum: originalOptionColumn
+        .filter((option) => option !== filterValues.column) });
   }
 
   function handleChangeFilterSelect({ target }) {
@@ -73,7 +75,7 @@ export default function Table() {
   return (
     <main>
       <SelectFilter
-        optionsForSelect={ optionColum }
+        optionsForSelect={ filterValues.optionColum }
         id="column-filter"
         name="column"
         handleChange={ handleChangeFilterSelect }
