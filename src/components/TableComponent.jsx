@@ -7,10 +7,11 @@ function TableComponent() {
   const { data, tableRows } = useContext(MyContext);
 
   function createTD(object) {
+    delete object.residents;
     const valuesArr = Object.values(object);
     console.log(valuesArr);
-    return (valuesArr.map((crr) => (
-      <td key={ crr }>
+    return (valuesArr.map((crr, i) => (
+      <td key={ crr } className={ i }>
         { crr }
       </td>)));
   }

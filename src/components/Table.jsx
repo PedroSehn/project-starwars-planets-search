@@ -15,8 +15,7 @@ function Table() {
         .then((data) => setData(data.results));
     }
     fetchPlanets();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setData]);
 
   return (
     <div>
