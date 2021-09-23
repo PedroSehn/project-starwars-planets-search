@@ -5,6 +5,7 @@ import Context from './MyContext';
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
   const [arrFiltered, setArrFiltered] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
   const [tableRows, setTableRows] = useState([
     'Nome', 'Período de Rotação', 'Órbita', 'Diâmetro', 'Clima', 'Gravidade',
     'Terreno', 'Superfície Aquática', 'População',
@@ -18,6 +19,9 @@ function PlanetProvider({ children }) {
     setTableRows,
     arrFiltered,
     setArrFiltered,
+    nameFilter,
+    setNameFilter,
+
   };
 
   return (

@@ -3,9 +3,17 @@ import MyContext from '../context/MyContext';
 import TableComponent from './TableComponent';
 
 function Table() {
-  // const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  const url = 'https://swapi.dev/api/planets/';
-  const { setData } = useContext(MyContext);
+  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const {
+    setData,
+    setNameFilter,
+  } = useContext(MyContext);
+
+  // seta valor do filtro
+  function setFilter(e) {
+    const targetValue = e.target.value;
+    setNameFilter(targetValue);
+  }
 
   // componentDidMount
   useEffect(() => {
@@ -19,6 +27,15 @@ function Table() {
 
   return (
     <div>
+      <form>
+        <input
+          data-testid="name-filter"
+          placeholder="NAME"
+          type="text"
+          name="name"
+          onChange={ setFilter }
+        />
+      </form>
       <TableComponent />
     </div>
   );
