@@ -6,9 +6,6 @@ import PlanetProvider from './context/PlanetProviders';
 function App() {
   return (
     <PlanetProvider>
-      <div>
-        APP.JS
-      </div>
       <Table />
     </PlanetProvider>
   );

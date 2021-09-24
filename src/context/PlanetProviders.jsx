@@ -11,6 +11,11 @@ function PlanetProvider({ children }) {
     'Terreno', 'Superfície Aquática', 'População',
     'Filmes', 'Criação', 'Edição', 'link',
   ]);
+  const [filters, setFilters] = useState({
+    column: 'population',
+    comparative: 'maior que',
+    number: 0,
+  });
 
   const objetoNovo = {
     data,
@@ -21,7 +26,8 @@ function PlanetProvider({ children }) {
     setArrFiltered,
     nameFilter,
     setNameFilter,
-
+    filters,
+    setFilters,
   };
 
   return (
