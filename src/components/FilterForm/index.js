@@ -8,6 +8,7 @@ function FilterForm() {
     setFilters,
     setArrFiltered,
     data,
+
   } = useContext(MyContext);
 
   // seta valor do filtro NAME
@@ -44,12 +45,16 @@ function FilterForm() {
     setFilters((prev) => prev, filters[name] = value);
   }
 
-  const selectColumOpt = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
+  function filterColumOpt() {
+    const { column } = filters;
+    const allFIlters = ['population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water'];
+    return allFIlters.filter((crr) => crr !== column);
+  }
+  const selectColumOpt = filterColumOpt();
 
   return (
     <form>
@@ -63,10 +68,12 @@ function FilterForm() {
       <select
         name="column"
         data-testid="column-filter"
+        id="selectColum"
         onChange={ handleNumFilters }
+        onClick={ filterColumOpt }
       >
         {selectColumOpt.map((crr, i) => (
-          <option value={ crr } key={ `${crr} ${i}` }>{crr}</option>
+          <option value={ crr } key={ `${crr} ${i}` } id={ crr }>{crr}</option>
         ))}
       </select>
       <select

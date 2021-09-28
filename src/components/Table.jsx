@@ -7,6 +7,8 @@ function Table() {
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const {
     setData,
+    setLoading,
+    loading,
   } = useContext(MyContext);
 
   // componentDidMount
@@ -17,7 +19,7 @@ function Table() {
         .then((data) => setData(data.results));
     }
     fetchPlanets();
-  }, [setData]);
+  }, [loading, setData, setLoading]);
 
   return (
     <div>

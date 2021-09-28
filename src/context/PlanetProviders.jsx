@@ -12,10 +12,11 @@ function PlanetProvider({ children }) {
     'Filmes', 'Criação', 'Edição', 'link',
   ]);
   const [filters, setFilters] = useState({
-    column: 'population',
+    column: '',
     comparative: '>',
     number: '',
   });
+  const [loading, setLoading] = useState(false);
 
   const objetoNovo = {
     data,
@@ -28,6 +29,8 @@ function PlanetProvider({ children }) {
     setNameFilter,
     filters,
     setFilters,
+    loading,
+    setLoading,
   };
 
   return (
