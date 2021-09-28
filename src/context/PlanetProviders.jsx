@@ -13,8 +13,8 @@ function PlanetProvider({ children }) {
   ]);
   const [filters, setFilters] = useState({
     column: 'population',
-    comparative: 'maior que',
-    number: 0,
+    comparative: '>',
+    number: '',
   });
 
   const objetoNovo = {

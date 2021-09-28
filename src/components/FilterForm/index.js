@@ -6,7 +6,16 @@ function FilterForm() {
     setNameFilter,
     filters,
     setFilters,
+    setArrFiltered,
+    arrFiltered,
+    data,
   } = useContext(MyContext);
+  // console.log(filters);
+  function cleanFilters() {
+    setFilters((prev) => prev, filters.column = 'population');
+    setFilters((prev) => prev, filters.comparative = '>');
+    setFilters((prev) => prev, filters.number = '1');
+  }
 
   // seta valor do filtro NAME
   function setNameFilterFunc(e) {
@@ -14,25 +23,43 @@ function FilterForm() {
     setNameFilter(targetValue);
   }
 
+  function handleFilters(objeto) {
+    setArrFiltered(data);
+    const { column, comparative, number } = filters;
+    const targetKey = Number(objeto[column]);
+
+    switch (comparative) {
+    case '>':
+
+      return targetKey > Number(number) ? objeto : '';
+    case '<':
+      console.log(targetKey, Number(number));
+      console.log(targetKey < Number(number));
+      return targetKey < Number(number) ? objeto : '';
+    default:
+      return objeto[column] === number ? objeto : '';
+    }
+  }
+
   // seta valor dos filtros numerais
-  function setNumeralFilters({ column, comparative, number }) {
-    return filters;
+  function setNumeralFilters() {
+    const filteredData = arrFiltered.map((crr) => handleFilters(crr));
+    const cleanFilteredData = filteredData.filter((crr) => crr !== '');
+    return setArrFiltered(cleanFilteredData);
   }
 
   function handleNumFilters(e) {
     const { name } = e.target;
     const { value } = e.target;
     setFilters((prev) => prev, filters[name] = value);
-    console.log(filters);
   }
+
   const selectColumOpt = [
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
     'surface_water'];
-
-  const compareOptions = ['maior que', 'menor que', 'igual a'];
 
   return (
     <form>
@@ -57,9 +84,9 @@ function FilterForm() {
         name="comparative"
         onChange={ handleNumFilters }
       >
-        {compareOptions.map((crr, i) => (
-          <option value={ crr } key={ `${crr} ${i}` }>{crr}</option>
-        ))}
+        <option value=">">maior que</option>
+        <option value="<">menor que</option>
+        <option value="===">igual a</option>
       </select>
       <input
         data-testid="value-filter"
@@ -68,6 +95,13 @@ function FilterForm() {
         placeholder="VALUE"
         onChange={ handleNumFilters }
       />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ setNumeralFilters }
+      >
+        Filtrar
+      </button>
     </form>
   );
 }
