@@ -56,6 +56,10 @@ function FilterForm() {
   }
   const selectColumOpt = filterColumOpt();
 
+  function resetFilters() {
+    setArrFiltered(data);
+  }
+
   return (
     <form>
       <input
@@ -99,6 +103,11 @@ function FilterForm() {
       >
         Filtrar
       </button>
+      <div data-testid="filter">
+        <button type="button" onClick={ resetFilters }>X</button>
+        <button type="button" onClick={ resetFilters }>X</button>
+      </div>
+
     </form>
   );
 }
