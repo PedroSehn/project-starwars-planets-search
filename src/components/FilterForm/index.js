@@ -7,15 +7,8 @@ function FilterForm() {
     filters,
     setFilters,
     setArrFiltered,
-    arrFiltered,
     data,
   } = useContext(MyContext);
-  // console.log(filters);
-  function cleanFilters() {
-    setFilters((prev) => prev, filters.column = 'population');
-    setFilters((prev) => prev, filters.comparative = '>');
-    setFilters((prev) => prev, filters.number = '1');
-  }
 
   // seta valor do filtro NAME
   function setNameFilterFunc(e) {
@@ -29,12 +22,9 @@ function FilterForm() {
     const targetKey = Number(objeto[column]);
 
     switch (comparative) {
-    case '>':
-
+    case 'maior que':
       return targetKey > Number(number) ? objeto : '';
-    case '<':
-      console.log(targetKey, Number(number));
-      console.log(targetKey < Number(number));
+    case 'menor que':
       return targetKey < Number(number) ? objeto : '';
     default:
       return objeto[column] === number ? objeto : '';
@@ -43,7 +33,7 @@ function FilterForm() {
 
   // seta valor dos filtros numerais
   function setNumeralFilters() {
-    const filteredData = arrFiltered.map((crr) => handleFilters(crr));
+    const filteredData = data.map((crr) => handleFilters(crr));
     const cleanFilteredData = filteredData.filter((crr) => crr !== '');
     return setArrFiltered(cleanFilteredData);
   }
@@ -84,9 +74,9 @@ function FilterForm() {
         name="comparative"
         onChange={ handleNumFilters }
       >
-        <option value=">">maior que</option>
-        <option value="<">menor que</option>
-        <option value="===">igual a</option>
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual a</option>
       </select>
       <input
         data-testid="value-filter"
