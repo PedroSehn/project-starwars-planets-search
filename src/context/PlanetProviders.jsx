@@ -17,6 +17,10 @@ function PlanetProvider({ children }) {
     number: '',
   });
   const [loading, setLoading] = useState(false);
+  const [numFiltersTable, setNumFiltersTable] = useState({
+    OrderColumn: '',
+    typeSort: '',
+  });
 
   const objetoNovo = {
     data,
@@ -31,6 +35,8 @@ function PlanetProvider({ children }) {
     setFilters,
     loading,
     setLoading,
+    numFiltersTable,
+    setNumFiltersTable,
   };
 
   return (

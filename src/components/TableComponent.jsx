@@ -9,9 +9,9 @@ function TableComponent() {
     tableRows,
     arrFiltered,
     setArrFiltered,
-    nameFilter } = useContext(MyContext);
+    nameFilter,
+  } = useContext(MyContext);
 
-  // component didMount
   useEffect(() => {
     // fill filteredArr
     function filterByName(parametro) {
@@ -28,17 +28,24 @@ function TableComponent() {
   function createTD(object) {
     delete object.residents;
     const valuesArr = Object.values(object);
-    return (valuesArr.map((crr) => (
-      <td key={ crr }>
-        { crr }
-      </td>)));
+    return (valuesArr.map((crr, i) => {
+      if (i === 0) {
+        return (
+          <td key={ crr } data-testid="planet-name">
+            { crr }
+          </td>);
+      }
+      return (
+        <td key={ crr }>
+          { crr }
+        </td>);
+    }));
   }
 
   // verifica se já chegou resultados da API
   if (data.length === 0) {
     return <Loading />;
   }
-
   return (
     <div>
       <table>
@@ -46,10 +53,17 @@ function TableComponent() {
           {tableRows.map((crr) => <th key={ crr } className="tableRows">{ crr }</th>)}
         </tr>
         <tbody>
-          {arrFiltered.map((crr, i) => <tr key={ i }>{ createTD(crr) }</tr>)}
+          {arrFiltered.map((crr, i) => (
+            <tr
+              key={ i }
+              className="planet-rows"
+            >
+              { createTD(crr) }
+            </tr>))}
         </tbody>
       </table>
     </div>
+
   );
 }
 
