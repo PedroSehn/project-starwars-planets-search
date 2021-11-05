@@ -111,54 +111,68 @@ function FilterForm() {
     }
   }
   return (
-    <form>
-      <input
-        data-testid="name-filter"
-        placeholder="NAME"
-        type="text"
-        name="name"
-        onChange={ setNameFilterFunc }
-      />
-      <select
-        name="column"
-        data-testid="column-filter"
-        id="selectColum"
-        onChange={ handleNumFilters }
-        onClick={ filterColumOpt }
-      >
-        {selectColumOpt.map((crr, i) => (
-          <option value={ crr } key={ `${crr} ${i}` } id={ crr }>{crr}</option>
-        ))}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        name="comparative"
-        onChange={ handleNumFilters }
-      >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
-      </select>
-      <input
-        data-testid="value-filter"
-        type="number"
-        name="number"
-        placeholder="VALUE"
-        onChange={ handleNumFilters }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ setNumeralFilters }
-      >
-        Filtrar
-      </button>
-      <div data-testid="filter">
-        <button type="button" onClick={ resetFilters }>X</button>
-        <button type="button" onClick={ resetFilters }>X</button>
+    <form className="filterForm">
+      <div id="infoFilter">
+        <input
+          className="filterInput"
+          data-testid="name-filter"
+          placeholder="Name"
+          type="text"
+          name="name"
+          onChange={ setNameFilterFunc }
+        />
+        <select
+          name="column"
+          data-testid="column-filter"
+          className="filterInput"
+          onChange={ handleNumFilters }
+          onClick={ filterColumOpt }
+        >
+          {selectColumOpt.map((crr, i) => (
+            <option value={ crr } key={ `${crr} ${i}` } id={ crr }>{crr}</option>
+          ))}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          name="comparative"
+          className="filterInput"
+          onChange={ handleNumFilters }
+        >
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
+        </select>
+        <input
+          data-testid="value-filter"
+          className="filterInput"
+          type="number"
+          name="number"
+          placeholder="Numero"
+          onChange={ handleNumFilters }
+        />
+        <button
+          type="button"
+          data-testid="button-filter"
+          className="filterInput"
+          onClick={ setNumeralFilters }
+        >
+          Filtrar
+        </button>
+        <button
+          type="button"
+          className="filterInput"
+          onClick={ resetFilters }
+        >
+          Resetar Filtros
+
+        </button>
       </div>
-      <div>
-        <select data-testid="column-sort" onChange={ sortColumStatus }>
+      <div id="orderFilter">
+        <select
+          data-testid="column-sort"
+          onChange={ sortColumStatus }
+          className="filterInput"
+        >
           {selectColumOpt.map((crr, i) => (
             <option value={ crr } key={ `${crr} ${i}` } id={ crr }>{crr}</option>
           ))}
@@ -167,6 +181,7 @@ function FilterForm() {
           Ascendente
           <input
             type="radio"
+            className="radioInput"
             value="ASC"
             id="asc"
             name="asc-dsc"
@@ -176,6 +191,7 @@ function FilterForm() {
           Descendente
           <input
             type="radio"
+            className="radioInput"
             value="DSC"
             id="dsc"
             name="asc-dsc"
@@ -186,9 +202,10 @@ function FilterForm() {
         <button
           type="button"
           data-testid="column-sort-button"
+          className="filterInput"
           onClick={ sortItems }
         >
-          ordenate
+          Ordernar
 
         </button>
       </div>

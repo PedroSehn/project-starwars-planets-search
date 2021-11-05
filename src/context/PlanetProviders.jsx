@@ -8,8 +8,7 @@ function PlanetProvider({ children }) {
   const [nameFilter, setNameFilter] = useState('');
   const [tableRows, setTableRows] = useState([
     'Nome', 'Período de Rotação', 'Órbita', 'Diâmetro', 'Clima', 'Gravidade',
-    'Terreno', 'Superfície Aquática', 'População',
-    'Filmes', 'Criação', 'Edição', 'link',
+    'Terreno', 'Superfície Aquática', 'População', 'Criação', 'Edição', 'link',
   ]);
   const [filters, setFilters] = useState({
     column: '',

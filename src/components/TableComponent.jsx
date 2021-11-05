@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 import Loading from './Loading';
-
 // function pra acessar as chaves e retornar <tr> com as infos
 function TableComponent() {
   const {
@@ -27,16 +26,18 @@ function TableComponent() {
   // recebe um object e retorna uma ROW
   function createTD(object) {
     delete object.residents;
+    delete object.films;
+    delete object.link;
     const valuesArr = Object.values(object);
     return (valuesArr.map((crr, i) => {
       if (i === 0) {
         return (
-          <td key={ crr } data-testid="planet-name">
+          <td key={ crr } data-testid="planet-name" className="tableData">
             { crr }
           </td>);
       }
       return (
-        <td key={ crr }>
+        <td key={ crr } className="tableData">
           { crr }
         </td>);
     }));
@@ -48,15 +49,15 @@ function TableComponent() {
   }
   return (
     <div>
-      <table>
+      <table className="styled-table">
         <tr>
           {tableRows.map((crr) => <th key={ crr } className="tableRows">{ crr }</th>)}
         </tr>
         <tbody>
           {arrFiltered.map((crr, i) => (
             <tr
+              className="planetData"
               key={ i }
-              className="planet-rows"
             >
               { createTD(crr) }
             </tr>))}
